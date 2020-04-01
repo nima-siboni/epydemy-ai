@@ -73,7 +73,7 @@ logits = neural_net(X)
 prediction = logits
 # Define loss and optimizer
 #loss_op = tf.nn.l2_loss( tf.subtract(logits,Y))
-loss_op = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=Y, logits=logits, name=None))
+loss_op = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=Y, logits=logits))
 train_op = tf.train.AdamOptimizer(learning_rate=learning_rate_Adam, beta2=0.999, beta1=0.9, epsilon=1e-4).minimize(loss_op)
 #train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_GD).minimize(loss_op)
 
