@@ -37,3 +37,9 @@ def slice_the_data(X, Y):
     Y_train = Y[0:mtrain, :]
     Y_eval = Y[mtrain:m, :]
     return X_train, Y_train, X_eval, Y_eval
+
+def mean_normalize(X):
+    result=X-np.mean(X, axis=0)
+    std = np.std(result, axis=0)
+    stdp = np.transpose(std[:,np.newaxis])
+    return result/stdp
