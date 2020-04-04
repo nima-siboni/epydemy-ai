@@ -3,9 +3,10 @@ import numpy as np
 def shuffle_them(X,Y):
     tmp=np.concatenate((X,Y), axis =1)
     np.random.shuffle(tmp)
-    X=tmp[..., 0:5]
-    Y=tmp[..., 5]
-    m = (len(Y));  # number of total samples
+    [m, n] = np.shape(X)
+    X=tmp[..., 0:n]
+    Y=tmp[..., n]
+    #m = (len(Y));  # number of total samples
     Y = Y.reshape(m,1)
     return X,Y
 
@@ -43,3 +44,18 @@ def mean_normalize(X):
     std = np.std(result, axis=0)
     stdp = np.transpose(std[:,np.newaxis])
     return result/stdp
+
+def convert_cases_to_probability(X, Y):
+    [m, n] = np.shape(X);
+    [X_unique, indices] = np.unique(X, axis=0, return_inverse=True) 
+    [m_unique, n] = np.shape(X_unique)
+    print("# "+str(m_unique/float(m)*100)+" percent of the data is unique")
+    Y_unique = np.zeros(np.shape(Y))
+    for i in range(0, m_unique):
+        repeatition = 0
+        for j in range(0, m):
+            if (i==indices[j]):
+                repeatition += 1.0
+                Y_unique[i] += float(Y[j])
+        Y_unique[i] /= repeatition
+    return X_unique, Y_unique
