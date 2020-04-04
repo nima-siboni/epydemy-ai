@@ -50,7 +50,7 @@ def convert_cases_to_probability(X, Y):
     [X_unique, indices] = np.unique(X, axis=0, return_inverse=True) 
     [m_unique, n] = np.shape(X_unique)
     print("# "+str(m_unique/float(m)*100)+" percent of the data is unique")
-    Y_unique = np.zeros(np.shape(Y))
+    Y_unique = np.zeros(shape = (m_unique, 1))
     for i in range(0, m_unique):
         repeatition = 0
         for j in range(0, m):
@@ -59,3 +59,7 @@ def convert_cases_to_probability(X, Y):
                 Y_unique[i] += float(Y[j])
         Y_unique[i] /= repeatition
     return X_unique, Y_unique
+
+def write_all_data(X, filename):
+    np.savetxt(filename, X)
+    print("# the data is written in "+filename)
