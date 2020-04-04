@@ -4,8 +4,8 @@ def shuffle_them(X,Y):
     tmp=np.concatenate((X,Y), axis =1)
     np.random.shuffle(tmp)
     [m, n] = np.shape(X)
-    X=tmp[..., 0:n]
-    Y=tmp[..., n]
+    X=tmp[:, 0:n]
+    Y=tmp[:, n]
     #m = (len(Y));  # number of total samples
     Y = Y.reshape(m,1)
     return X,Y
@@ -52,12 +52,10 @@ def convert_cases_to_probability(X, Y):
     print("# "+str(m_unique/float(m)*100)+" percent of the data is unique")
     Y_unique = np.zeros(shape = (m_unique, 1))
     for i in range(0, m_unique):
-        repeatition = 0
-        for j in range(0, m):
-            if (i==indices[j]):
-                repeatition += 1.0
-                Y_unique[i] += float(Y[j])
-        Y_unique[i] /= repeatition
+        mask = indices==i
+        repeatition = np.sum(mask)
+        Y_sel = Y[mask]
+        Y_unique[i] = np.sum(Y_sel)/repeatition
     return X_unique, Y_unique
 
 def write_all_data(X, filename):
