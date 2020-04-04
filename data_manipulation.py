@@ -45,6 +45,12 @@ def mean_normalize(X):
     stdp = np.transpose(std[:,np.newaxis])
     return result/stdp
 
+def max_min_normalize(X):
+    result = X - np.min(X, axis=0)
+    std = np.max(result, axis=0) - np.min(result, axis=0)
+    stdp = np.transpose(std[:,np.newaxis])
+    return result/stdp
+
 def convert_cases_to_probability(X, Y):
     [m, n] = np.shape(X);
     [X_unique, indices] = np.unique(X, axis=0, return_inverse=True) 
