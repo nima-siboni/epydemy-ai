@@ -67,3 +67,7 @@ def convert_cases_to_probability(X, Y):
 def write_all_data(X, filename):
     np.savetxt(filename, X)
     print("# the data is written in "+filename)
+
+def descritize(X, col, binwidth):
+    X[:, col] = np.floor(X[:, col]/binwidth)
+    
