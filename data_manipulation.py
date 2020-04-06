@@ -70,4 +70,10 @@ def write_all_data(X, filename):
 
 def descritize(X, col, binwidth):
     X[:, col] = np.floor(X[:, col]/binwidth)
-    
+
+# This function is basically doing the same job as the above function with a difference that if an element of the X array has a value equal to the maximum of the array, then an epsilon = 10^-5 is substracted from it.
+def descritize_with_max(X, col, binwidth):
+    epsilon = 10**-5
+    maxval = np.max(X[:, col])
+    X[:, col] = X[:, col] - epsilon * (X[:, col] == maxval)
+    X[:, col] = np.floor(X[:, col]/binwidth) 

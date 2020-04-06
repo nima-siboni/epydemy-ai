@@ -12,3 +12,10 @@ def performance(prediction, Y):
     print("# precision :"+str(Precision))
     print("# recall :"+str(Recall))
     print("# F1 :"+str(F1))
+
+
+def performance_multivalued(prediction, Y):
+    correctly_predicted = (prediction==Y).astype(int)
+    nr_correctly_predicted = float(sum(correctly_predicted))
+    print("# accuracy :"+str(nr_correctly_predicted / np.size(Y)))
+
