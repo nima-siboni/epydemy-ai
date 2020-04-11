@@ -17,7 +17,7 @@ from data_manipulation import descritize_with_max
 from data_manipulation import descritize
 ## read data
 [X, Y] = read_all_data("X_all_processed_3_features.dat", "Y_all_processed_3_features.dat")
-m = 5000
+m = 10000
 X = X[0:m, :]
 Y = Y[0:m, :]
 
@@ -28,24 +28,29 @@ model = Sequential()
 model.add(Dense(10, input_dim=n_features, kernel_initializer= 'uniform' , activation= 'relu' ))
 model.add(Dense(5, kernel_initializer= 'uniform' , activation= 'relu' ))
 model.add(Dense(1, kernel_initializer= 'uniform' , activation= 'sigmoid' ))
-#model.compile(loss= 'binary_crossentropy' , optimizer= 'adam' , metrics=['accuracy'])
-model.compile(loss= 'mean_squared_error' , optimizer= 'adam' , metrics=['accuracy'])
+model.compile(loss= 'binary_crossentropy' , optimizer= 'adam' , metrics=['accuracy'])
+#model.compile(loss= 'mean_squared_error' , optimizer= 'adam' , metrics=['accuracy'])
 history = model.fit(X_train, Y_train, epochs=50, batch_size=100)
 scores = model.evaluate(X_train, Y_train)
 print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 predicted = model.predict(X_eval, batch_size=None, verbose=0, steps=None, callbacks=None, max_queue_size=10, workers=1, use_multiprocessing=False)
 
-print("The predictions are coarse grained to high risk and low risk populations")
-#coarse_prediction = (predicted>0.5).astype(int)
-#coarse_Y = (Y_eval>0.5).astype(int)
-#performance(coarse_prediction, coarse_Y)
 
-binwidth = 1.0/4.0
-descritize_with_max(predicted, 0, binwidth)
-descritize_with_max(Y_eval, 0, binwidth)
+print("The predictions are coarse grained to high risk and low risk populations")
+highrisk_criterion = 0.75
+print("If the probability is larger than "+str(highrisk_criterion*100)+"% that individual is considered high risk")
+coarse_prediction = (predicted > highrisk_criterion).astype(int)
+coarse_Y = (Y_eval > highrisk_criterion).astype(int)
+performance(coarse_prediction, coarse_Y)
+
+#binwidth = 1.0/4.0
+#descritize_with_max(predicted, 0, binwidth)
+#descritize_with_max(Y_eval, 0, binwidth)
+#performance_multivalued(predicted, Y_eval)
+
 print(predicted[0:10,:])
 print(Y_eval[0:10,:])
-performance_multivalued(predicted, Y_eval)
+
 
 
 # Plot training & validation loss values
