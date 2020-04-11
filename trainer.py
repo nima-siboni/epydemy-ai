@@ -48,8 +48,8 @@ performance(coarse_prediction, coarse_Y)
 #descritize_with_max(Y_eval, 0, binwidth)
 #performance_multivalued(predicted, Y_eval)
 
-print(predicted[0:10,:])
-print(Y_eval[0:10,:])
+print(predicted[0:20,:])
+print(Y_eval[0:20,:])
 
 
 
