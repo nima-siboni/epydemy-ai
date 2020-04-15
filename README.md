@@ -13,4 +13,4 @@ The neural-network is trained by using almost 4 millions individual in 400 simul
 * recall = 0.85%
 * F1 = 0.88%
 
-The neural-network is build and trained by TensorFlow.
+The neural-network is build and trained by TensorFlow 2.0.1 .
