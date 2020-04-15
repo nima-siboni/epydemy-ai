@@ -18,3 +18,5 @@ The neural-network is build and trained by TensorFlow 2.0.1 .
 List of important files:
 * preprocessing_data.py : converts the raw data of each individual to a probability.
 * trainer.py : builds the neural-network and trains it.
+
+The next step is to use the predictions of this neural-network and **selectively** quarantine some agents in [epydemy](https://github.com/nima-siboni/epydemy) to prevent the pandemic from an outbreak.
